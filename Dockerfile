@@ -1,6 +1,11 @@
 ARG NODE_VERSION=15.5-alpine
 
-FROM node:${NODE_VERSION} AS build
+FROM node:${NODE_VERSION} AS base
+RUN apk add --no-cache python3 py3-pip
+
+FROM base AS build
+RUN apk add --no-cache alpine-sdk linux-headers
+
 ARG CI=true
 WORKDIR /build
 COPY package.json .
@@ -11,7 +16,7 @@ COPY . .
 RUN npm run lint 
 RUN npm run build
 
-FROM node:${NODE_VERSION} AS run
+FROM base AS run
 
 WORKDIR /app
 

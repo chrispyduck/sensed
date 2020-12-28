@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@chrispyduck/homie-device": "^0.1.23",
-    "@chrispyduck/homie-sensors": "file:../homie-sensors",
+    "@chrispyduck/homie-sensors": "^0.1.19",
     "@types/mathjs": "^6.0.9",
     "lodash": "^4.17.20",
     "mathjs": "^8.1.0",
