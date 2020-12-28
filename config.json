@@ -1,0 +1,26 @@
+{
+  "device": {
+    "name": "pi-livingroom",
+    "friendlyName": "Living Room Raspberry Pi Display",
+    "mqtt": {
+      "client": {
+        "host": "10.2.12.3",
+        "port": "1883",
+        "username": "pi-livingroom",
+        "password": "230945tyreiws0dsg9"
+      }
+    },
+    "statsInterval": 90
+  },
+  "sensors": [
+    {
+      "type": "i2c",
+      "model": "AHT20",
+      "measureInterval": 15,
+      "configuration": {
+        "busNumber": 1
+      },
+      "print": true
+    }
+  ]
+}
