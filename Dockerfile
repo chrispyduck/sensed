@@ -20,8 +20,11 @@ FROM base AS run
 
 WORKDIR /app
 
-COPY --from=build /build/package*.json /app
-RUN npm install --production
+COPY --from=build /build/package*.json /app/
+RUN set -xe; \
+    apk add --no-cache alpine-sdk linux-headers; \
+    npm install --production; \
+    apk del --no-cache alpine-sdk linux-headers;
 
 COPY --from=build /build/dist /app/dist
 
