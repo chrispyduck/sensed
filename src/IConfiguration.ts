@@ -14,6 +14,13 @@ export default interface IConfiguration {
    * All sensors that should be 
    */
   sensors: Array<Sensor>;
+
+  logLevel: string;
+
+  /**
+   * The port number that this service will listen on for HTTP requests for the /metrics and /health endpoints
+   */
+  port?: number;
 }
 
 export type Sensor = II2CSensor;

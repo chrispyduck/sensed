@@ -16,7 +16,7 @@ export default class Metrics {
     });
 
     this.server = http.createServer(this.handleRequest);
-    this.server.listen(80);
+    this.server.listen(config.port || 80);
   } 
 
   public shutdown = async (): Promise<void> => {

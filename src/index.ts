@@ -3,7 +3,7 @@ import { AHT20, ISensor } from "@chrispyduck/homie-sensors";
 import IConfiguration, { II2CSensor, Sensor } from "./IConfiguration";
 import fs from "fs";
 import * as math from "mathjs";
-import rootLogger from "./Logging";
+import rootLogger, { setLevel } from "./Logging";
 import process from "process";
 import Metrics from "./Metrics";
 
@@ -34,8 +34,9 @@ class Main {
 
   run = async () => {
     const config = await this.loadConfig();
-    const device = this.device = new HomieDevice(config.device);
+    setLevel(config.logLevel || "info");
 
+    const device = this.device = new HomieDevice(config.device);
     const initJobs = config.sensors
       .map(config => ({
         sensor: this.resolveSensor(config),
@@ -97,15 +98,16 @@ class Main {
     }
   }
 
+  private resolveMainLoop: () => void = () => { 
+    // this should never be called; it should always be overwritten with another function
+    rootLogger.error("This is a bug");
+  };
   private mainLoop = new Promise<void>((resolve) => {
     this.resolveMainLoop = resolve;
   });
   private metrics = new Metrics();
   private timer: NodeJS.Timeout | undefined;
-  private resolveMainLoop: () => void = () => { 
-    // this should never be called; it should always be overwritten with another function
-    rootLogger.error("This is a bug");
-  };
+  
   private logger: rootLogger.Logger = rootLogger.child({ type: "main" });
   private device: HomieDevice | undefined = undefined;
   private interval = 0;

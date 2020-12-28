@@ -1,5 +1,6 @@
 import winston from "winston";
 
+const consoleTransport = new winston.transports.Console();
 winston.configure({
   format: winston.format.combine(
     winston.format.colorize(),
@@ -26,9 +27,11 @@ winston.configure({
     }),
   ),
   level: "info",
-  transports: [
-    new winston.transports.Console(),
-  ],
+  transports: [consoleTransport],
 });
+
+export function setLevel(level: string): void {
+  consoleTransport.level = level;
+}
 
 export default winston;
