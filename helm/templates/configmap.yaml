@@ -5,4 +5,5 @@ metadata:
   labels:
     {{- include "sensors.labels" . | nindent 4 }}
 data:
-{{ .Values.configuration | toPrettyJson | indent 2 }}
+  config.json: |
+{{ toPrettyJson .Values.configuration | indent 4 }}

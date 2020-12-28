@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "sensors.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "sensors.selectorLabels" . | nindent 6 }}
@@ -28,6 +26,9 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
+      - name: config
+        configMap:
+          name: {{ include "sensors.fullname" . }}
       {{- range .Values.hardware }}
       - name: hw-{{ .name }}
         hostPath:
@@ -40,6 +41,9 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
+          - name: config
+            mountPath: /app/config.json
+            subPath: config.json
           {{- range .Values.hardware }}
           - name: hw-{{ .name }}
             mountPath: {{ .path }}
