@@ -8,15 +8,17 @@ COPY package-lock.json .
 RUN npm install
 
 COPY . .
+RUN npm run lint 
 RUN npm run build
 
 FROM node:${NODE_VERSION} AS run
 
-RUN npm install -g serve
-
 WORKDIR /app
 
-COPY --from=build /build/build /app
+COPY --from=build /build/package*.json /app
+RUN npm install --production
 
-EXPOSE 3000
-ENTRYPOINT [ "serve", "-p", "3000" ]
+COPY --from=build /build/dist /app/dist
+
+ENTRYPOINT [ "node" ]
+CMD [ "--enable-source-maps", "dist/index.js" ]

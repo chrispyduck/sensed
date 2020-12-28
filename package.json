@@ -1,5 +1,5 @@
 {
-  "name": "@chrispyduck/publish-local-sensors",
+  "name": "@chrispyduck/sensed",
   "description": "A nodejs service that reports readings from local hardware via MQTT",
   "version": "1.0.0",
   "author": {
