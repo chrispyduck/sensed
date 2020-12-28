@@ -6,7 +6,7 @@ winston.configure({
     winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
     winston.format.printf((info) => {
       let msg = info.message;
-      msg = `${info.timestamp} ${info.level} [${info.type || ""}/${info.name || ""}]: ${msg}`;
+      msg = `${info.timestamp} ${info.level} [${info.type || ""}]: ${msg}`;
       const exclude = ["timestamp", "level", "label", "message", "error", "type", "name"];
       Object.entries(info).forEach(([k, v]) => {
         if (exclude.includes(k)) {
@@ -25,7 +25,7 @@ winston.configure({
       return msg;
     }),
   ),
-  level: "silly",
+  level: "info",
   transports: [
     new winston.transports.Console(),
   ],

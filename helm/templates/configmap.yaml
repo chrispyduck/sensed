@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sensors.fullname" . }}
+  labels:
+    {{- include "sensors.labels" . | nindent 4 }}
+data:
+{{ .Values.configuration | toPrettyJson | indent 2 }}

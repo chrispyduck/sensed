@@ -46,17 +46,14 @@
     "@types/mathjs": "^6.0.9",
     "lodash": "^4.17.20",
     "mathjs": "^8.1.0",
+    "prom-client": "^13.0.0",
     "winston": "^3.3.3"
   },
   "scripts": {
     "start": "npx ts-node src/index.ts",
-    "watch": "watch 'npm run test' .",
     "clean": "npx shx rm -rf .nyc_output/ node_modules/ dist/ docs/ tsconfig.tsbuildinfo tsconfig.src.tsbuildinfo",
     "build": "npx tsc --build src",
     "rebuild": "npm run clean && npm install && npm run build",
-    "test": "npx nyc --source-map --include 'src/**/*.ts' mocha --exit -r ts-node/register --grep '#Integration' --invert test/**/*.ts test/**/*.js",
-    "test.all": "npx nyc --source-map --include 'src/**/*.ts' mocha --exit -r ts-node/register test/**/*.ts test/**/*.js",
-    "coverage": "npx nyc report --reporter=text-lcov | coveralls",
-    "lint": "npx eslint 'src/**/*.ts' 'test/**/*.ts'"
+    "lint": "npx eslint 'src/**/*.ts'"
   }
 }

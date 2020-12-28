@@ -1,6 +1,9 @@
 import { IHomieDeviceConfiguration } from "@chrispyduck/homie-device";
 import { II2CConfiguration } from "@chrispyduck/homie-sensors";
 
+/**
+ * The configuration file format
+ */
 export default interface IConfiguration {
   /**
    * Configuration of the homie device 
@@ -15,7 +18,11 @@ export default interface IConfiguration {
 
 export type Sensor = II2CSensor;
 
-export interface ISensor<TConfig extends Record<never, any>> {
+/**
+ * Sensor configuration
+ * @tempate TConfig - The configuration object format
+ */
+export interface ISensor<TConfig extends Record<never, any>> { // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * The type of sensor
    */
@@ -32,11 +39,14 @@ export interface ISensor<TConfig extends Record<never, any>> {
   configuration: TConfig;
 
   /**
-   * Whether to print measurement results in the log
+   * Whether to print measurement results in the log when they are taken
    */
   print: boolean;
 }
 
+/**
+ * Configuration of an I2C sensor
+ */
 export interface II2CSensor extends ISensor<II2CConfiguration> {
   type: "i2c";
 

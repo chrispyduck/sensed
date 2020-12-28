@@ -5,6 +5,7 @@ import fs from "fs";
 import * as math from "mathjs";
 import rootLogger from "./Logging";
 import process from "process";
+import Metrics from "./Metrics";
 
 class Main {
   loadConfig = async (): Promise<IConfiguration> => {
@@ -12,7 +13,7 @@ class Main {
     return JSON.parse(raw) as IConfiguration;
   }
 
-  resolveSensor = (config: Sensor): ISensor<Record<never, any>> => {
+  resolveSensor = (config: Sensor): ISensor<Record<never, any>> => { // eslint-disable-line @typescript-eslint/no-explicit-any
     switch (config.type) {
       case "i2c": {
         return this.resolveI2cSensor(config);
@@ -21,7 +22,7 @@ class Main {
     throw new Error(`Unsupported sensor type: ${config.type}`);
   }
 
-  resolveI2cSensor = (config: II2CSensor): ISensor<Record<never, any>> => {
+  resolveI2cSensor = (config: II2CSensor): ISensor<Record<never, any>> => { // eslint-disable-line @typescript-eslint/no-explicit-any
     switch (config.model.toUpperCase()) {
       //todo: move this logic into homie-sensors
       case "AHT20": {
@@ -48,6 +49,7 @@ class Main {
     await Promise.all(initJobs);
 
     device.setup();
+    this.metrics.init(config);
 
     this.interval = this.sensors.length == 1
       ? this.sensors[0].config.measureInterval
@@ -66,26 +68,27 @@ class Main {
   shutdown = () => {
     this.logger.error("Shutting down...");
     if (this.timer)
-    clearInterval(this.timer);
+      clearInterval(this.timer);
     this.device?.end();
+    this.metrics.shutdown();
     setTimeout(() => this.resolveMainLoop(), 500);
   }
 
   measure = () => {
     const start = new Date().getTime();
     this.measureAsync().then(
-      _ => {
+      () => {
         const end = new Date().getTime();
         this.logger.verbose(`Measurements took ${end - start} ms`);
       },
       e => {
-        this.logger.error(`Measurements failed`, e);
+        this.logger.error("Measurements failed", e);
       }
     );
   }
 
   measureAsync = async () => {
-    for (var i = 0; i < this.sensors.length; i++) {
+    for (let i = 0; i < this.sensors.length; i++) {
       const item = this.sensors[i];
       this.logger.info(`Measuring sensor ${i} (${item.config.type}/${item.config.model})`);
       const result = await item.sensor.read();
@@ -97,12 +100,16 @@ class Main {
   private mainLoop = new Promise<void>((resolve) => {
     this.resolveMainLoop = resolve;
   });
+  private metrics = new Metrics();
   private timer: NodeJS.Timeout | undefined;
-  private resolveMainLoop: () => void = () => { };
+  private resolveMainLoop: () => void = () => { 
+    // this should never be called; it should always be overwritten with another function
+    rootLogger.error("This is a bug");
+  };
   private logger: rootLogger.Logger = rootLogger.child({ type: "main" });
   private device: HomieDevice | undefined = undefined;
   private interval = 0;
-  private readonly sensors: Array<{ sensor: ISensor<Record<never, any>>, config: Sensor }> = [];
+  private readonly sensors: Array<{ sensor: ISensor<Record<never, any>>, config: Sensor }> = []; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 new Main().run().then(null, e => {
