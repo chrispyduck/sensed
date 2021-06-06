@@ -44,7 +44,7 @@
     "@chrispyduck/homie-device": "^0.1.23",
     "@chrispyduck/homie-sensors": "^0.1.20",
     "@types/mathjs": "^6.0.9",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mathjs": "^8.1.0",
     "prom-client": "^13.0.0",
     "winston": "^3.3.3"
