@@ -19,30 +19,33 @@
     "RaspberryPi",
     "OpenHAB"
   ],
+  "engines": {
+    "node": "~15.5"
+  },
   "devDependencies": {
     "@bazel/typescript": "^1.7.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/lodash": "^4.14.165",
-    "@types/node": "^13.13.9",
     "@types/chai": "^4.2.11",
+    "@types/lodash": "^4.14.165",
     "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.9",
     "@types/request": "^2.48.5",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
     "chai": "^4.2.0",
     "chai-events": "0.0.3",
-    "coveralls": "^3.1.0",
+    "coveralls": "^3.1.1",
     "eslint": "^7.15.0",
-    "mocha": "^7.2.0",
-    "nyc": "^14.1.1",
+    "mocha": "^9.1.3",
+    "nyc": "^15.1.0",
     "shx": "^0.3.2",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
-    "watch": "^1.0.2"
+    "watch": "^0.13.0"
   },
   "dependencies": {
-    "@chrispyduck/homie-device": "^0.1.23",
-    "@chrispyduck/homie-sensors": "^0.1.20",
+    "@chrispyduck/homie-device": "^0.1.34",
+    "@chrispyduck/homie-sensors": "^0.1.46",
     "@types/mathjs": "^6.0.9",
     "lodash": "^4.17.21",
     "mathjs": "^8.1.0",
