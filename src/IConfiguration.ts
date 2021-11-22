@@ -1,5 +1,6 @@
 import { IHomieDeviceConfiguration } from "@chrispyduck/homie-device";
 import { II2CConfiguration } from "@chrispyduck/homie-sensors";
+import { IBehaviorConfig } from "./behaviors";
 
 /**
  * The configuration file format
@@ -11,9 +12,12 @@ export default interface IConfiguration {
   device: IHomieDeviceConfiguration;
 
   /**
-   * All sensors that should be 
+   * All sensors that should be configured
    */
   sensors: Array<Sensor>;
+
+  /** All behaviors that should be configured */
+  behaviors: Array<IBehaviorConfig<Record<never, {}>>>;
 
   logLevel: string;
 
@@ -30,6 +34,12 @@ export type Sensor = II2CSensor;
  * @tempate TConfig - The configuration object format
  */
 export interface ISensor<TConfig extends Record<never, any>> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  
+  /**
+   * Unique identifier for this sensor, used to reference it elsewhere
+   */
+  id: string;
+
   /**
    * The type of sensor
    */

@@ -34,7 +34,7 @@
     "@typescript-eslint/parser": "^4.9.0",
     "chai": "^4.2.0",
     "chai-events": "0.0.3",
-    "coveralls": "^3.1.1",
+    "coveralls": "^2.11.4",
     "eslint": "^7.15.0",
     "mocha": "^9.1.3",
     "nyc": "^15.1.0",
@@ -45,12 +45,18 @@
   },
   "dependencies": {
     "@chrispyduck/homie-device": "^0.1.34",
-    "@chrispyduck/homie-sensors": "^0.1.46",
+    "@chrispyduck/homie-sensors": "^0.1.50",
+    "@types/i2c-bus": "^5.1.0",
     "@types/mathjs": "^6.0.9",
+    "@types/rpi-gpio": "^2.1.1",
+    "@types/winston": "^2.4.4",
+    "@types/ws": "^8.2.0",
     "lodash": "^4.17.21",
     "mathjs": "^8.1.0",
     "prom-client": "^13.0.0",
-    "winston": "^3.3.3"
+    "rpi-gpio": "^2.1.7",
+    "winston": "^3.3.3",
+    "ws": "^7.5.5"
   },
   "scripts": {
     "start": "npx ts-node src/index.ts",

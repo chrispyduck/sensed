@@ -7,13 +7,14 @@
         "host": "10.2.12.3",
         "port": "1883",
         "username": "pi-livingroom",
-        "password": "230945tyreiws0dsg9"
+        "password": "230945tyreiws0dsg9notreallymypassword"
       }
     },
     "statsInterval": 90
   },
   "sensors": [
     {
+      "id": "temp",
       "type": "i2c",
       "model": "AHT20",
       "measureInterval": 15,
@@ -21,6 +22,27 @@
         "busNumber": 1
       },
       "print": true
+    }
+  ],
+  "behaviors": [
+    {
+      "type": "thermostat",
+      "temperatureSensorId": "temp",
+      "safetyRange": {
+        "low": 40,
+        "high": 80
+      },
+      "defaultSetPoint": 71,
+      "actions": {
+        "fanSwitch": {
+          "type": "gpio",
+          "pin": 98
+        },
+        "heatSwitch": {
+          "type": "gpio",
+          "pin": 99
+        }
+      }
     }
   ]
 }
